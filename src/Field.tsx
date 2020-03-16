@@ -61,7 +61,7 @@ export interface FieldProps {
   dependencies?: NamePath[];
   getValueFromEvent?: (...args: EventArgs) => StoreValue;
   name?: NamePath;
-  normalize?: (value: StoreValue, prevValue: StoreValue, allValues: Store) => StoreValue;
+  normalize?: (value: StoreValue, allValues: Store) => StoreValue;
   rules?: Rule[];
   shouldUpdate?: ShouldUpdate;
   trigger?: string;
@@ -367,7 +367,12 @@ class Field extends React.Component<FieldProps, FieldState> implements FieldEnti
     const namePath = this.getNamePath();
     const { getInternalHooks, getFieldsValue }: InternalFormInstance = this.context;
     const { dispatch } = getInternalHooks(HOOK_MARK);
-    const value = this.getValue();
+    // normalize here
+    let value = this.getValue();
+
+    if (normalize) {
+      value = normalize(value, getFieldsValue(true));
+    }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const originTriggerFunc: any = childProps[trigger];
@@ -387,10 +392,6 @@ class Field extends React.Component<FieldProps, FieldState> implements FieldEnti
         newValue = getValueFromEvent(...args);
       } else {
         newValue = defaultGetValueFromEvent(valuePropName, ...args);
-      }
-
-      if (normalize) {
-        newValue = normalize(newValue, value, getFieldsValue(true));
       }
 
       dispatch({
