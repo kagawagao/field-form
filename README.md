@@ -81,7 +81,7 @@ We use typescript to create the Type definition. You can view directly in IDE. B
 | dependencies      | Will re-render if dependencies changed  | [NamePath](#namepath)[]                   | -        |
 | getValueFromEvent | Specify how to get value from event     | (..args: any[]) => any                    | -        |
 | name              | Field name path                         | [NamePath](#namepath)                     | -        |
-| normalize         | Normalize value before update           | (value, prevValue, prevValues) => any     | -        |
+| normalize         | Normalize value before update           | (value, allValues) => any     | -        |
 | rules             | Validate rules                          | [Rule](#rule)[]                           | -        |
 | shouldUpdate      | Check if Field should update            | true \| (prevValues, nextValues): boolean | -        |
 | trigger           | Collect value update by event trigger   | string                                    | onChange |
