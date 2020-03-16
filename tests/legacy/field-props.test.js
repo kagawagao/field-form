@@ -80,7 +80,7 @@ describe('legacy.field-props', () => {
 
     await changeValue(getField(wrapper), 'a');
 
-    expect(form.getFieldValue('normal')).toBe('A');
+    expect(form.getFieldValue('normal')).toBe('a');
     expect(
       getField(wrapper)
         .find('input')
